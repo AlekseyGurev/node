@@ -1,5 +1,5 @@
 const yargs = require('yargs');
-const { addNote, printNotes } = require('./notes.controller');
+const { addNote, printNotes, removeNotes } = require('./notes.controller');
 
 yargs.command({
   command: 'add',
@@ -21,6 +21,23 @@ yargs.command({
   describe: 'Print all note',
   async handler() {
     printNotes();
+  },
+});
+
+yargs.command({
+  command: 'remove',
+  describe: 'Remove note by id',
+
+  builder: {
+    id: {
+      type: 'string',
+      describe: 'Note id',
+      demandOption: true,
+    },
+  },
+
+  async handler({ id }) {
+    removeNotes(id);
   },
 });
 
