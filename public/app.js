@@ -9,7 +9,7 @@ document.addEventListener('click', (event) => {
     const parent = event.target.closest('li');
     const value = parent.getElementsByTagName('span')[0].innerText;
     const title = prompt('Write new title', value);
-    if (title) {
+    if (title && title != value) {
       const data = { id, title };
       notePatch(data).then(() => {
         parent.getElementsByTagName('span')[0].innerText = data.title;
