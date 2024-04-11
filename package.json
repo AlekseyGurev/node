@@ -4,7 +4,8 @@
   "description": "this is simple app",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "serve": "nodemon index.js"
   },
   "keywords": [
     "node",
@@ -13,8 +14,11 @@
   "author": "Alex <v@mail.ru>",
   "license": "ISC",
   "dependencies": {
-    "@types/yargs": "^17.0.32",
     "chalk": "^4.1.2",
     "yargs": "^17.7.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0",
+    "@types/yargs": "^17.0.32"
   }
 }
