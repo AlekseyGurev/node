@@ -5,16 +5,11 @@ document.addEventListener('click', (event) => {
       event.target.closest('li').remove();
     });
   } else if (event.target.dataset.type === 'edit') {
-    const id = event.target.dataset.id;
-    const parent = event.target.closest('li');
-    const value = parent.getElementsByTagName('span')[0].innerText;
-    const title = prompt('Write new title', value);
-    if (title && title != value) {
-      const data = { id, title };
-      notePatch(data).then(() => {
-        parent.getElementsByTagName('span')[0].innerText = data.title;
-      });
-    }
+    edit(event);
+  } else if (event.target.dataset.type === 'cancel') {
+    edit(event);
+  } else if (event.target.dataset.type === 'save') {
+    edit(event, true);
   }
 });
 
@@ -32,4 +27,25 @@ async function notePatch(data) {
     },
     body: JSON.stringify(data),
   });
+}
+
+function edit(event, save) {
+  const parent = event.target.closest('li');
+  const itemEdit = parent.querySelector('.edit-item');
+  const item = parent.querySelector('.item');
+  item.classList.toggle('visually-hidden');
+  itemEdit.classList.toggle('visually-hidden');
+
+  if (save) {
+    const id = event.target.dataset.id;
+    const oldTitle = parent.getElementsByTagName('span')[0].innerText;
+    const newTitle = parent.getElementsByTagName('input')[0].value;
+
+    if (newTitle && oldTitle != newTitle) {
+      const data = { id, title: newTitle };
+      notePatch(data).then(() => {
+        parent.getElementsByTagName('span')[0].innerText = data.title;
+      });
+    }
+  }
 }
