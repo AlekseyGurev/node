@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const chalk = require('chalk');
 const path = require('path');
@@ -157,12 +159,8 @@ app.patch('/:id', async (req, res) => {
   }
 });
 
-mongoose
-  .connect(
-    'mongodb+srv://gurevaleksey:oxOnnLTU9oD9c4GC@cluster0.gmjg0zi.mongodb.net/notes?retryWrites=true&w=majority&appName=Cluster0'
-  )
-  .then(() => {
-    app.listen(port, () => {
-      console.log(chalk.green(`server has been started on port ${port}...`));
-    });
+mongoose.connect(process.env.MONGODB_CONNECTION_STRING).then(() => {
+  app.listen(port, () => {
+    console.log(chalk.green(`server has been started on port ${port}...`));
   });
+});
